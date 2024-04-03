@@ -5,8 +5,48 @@
 			
 				<br>
 				<br>
-				<center><img src="/Nginxy/images/poweredby.png"</center>
+				<center><img src=""</center>
 			</div>
 		</div>
+	<script>
+		insertBeforeTable();
+		var keywordInput = document.getElementById('filter-keyword');
+		document.addEventListener('keyup', filterTable);
+		
+		function filterTable(e) {
+			if (e.target.id != 'filter-keyword') return;
+
+			var cols = document.querySelectorAll('tbody td:first-child');
+			var keyword = keywordInput.value.toLowerCase();
+			const child = [];
+			for (i = 0; i < cols.length; i++) {
+				var text = cols[i].textContent.toLowerCase();
+				if (text != 'parent directory') {
+					cols[i].parentNode.style.display = text.indexOf(keyword) === -1 ? 'none' : 'table-row';
+					if (cols[i].parentNode.style.display != 'none') {
+						child.push(cols[i].parentNode);
+					}
+				}
+			}
+			for (i = 0; i < child.length; i++) {
+				var element = child[i];
+				if (i%2 != 0) {
+					element.style.background = "#ffffff";
+				} else {
+					element.style.background = "#f4f4f4";
+				}
+			}
+		}
+
+		function insertBeforeTable() {
+			var table = document.getElementById('list');
+
+			var div = document.createElement('div');
+    			div.innerHTML = '<input type="text" name="keyword" id="filter-keyword" placeholder="Filter File Name">';
+			div.id = 'table-filter';
+
+			table.parentNode.insertBefore(div, table);
+		}
+	</script>
 	</body>
 </html>
